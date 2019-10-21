@@ -38,24 +38,39 @@ i = 0
 while(i<10):
     ret, frame = cap.read()
     i = i + 1
-
+frame = cv2.flip(frame, 1)
 trackerType = "CSRT" 
+hand_cascade = cv2.CascadeClassifier('cascade.xml') 
 
 while (True):
+    # using cascade classifire
+
+    # _, newFrame = cap.read()
+    # gray = cv2.cvtColor(newFrame, cv2.COLOR_BGR2GRAY)
+    # hands = hand_cascade.detectMultiScale(gray, 1.1, 4) 
+    # for bbox in hands:
+    #     a = bbox[0]
+    #     b = bbox[1]
+    #     c = bbox[2]
+    #     d = bbox[3]
+    #     boxes.append((a,b,a+c, b+d))
+    #     newFrame = cv2.rectangle(newFrame, (bbox[0], bbox[1]), (bbox[0]+bbox[2], bbox[1]+bbox[3]), (225,0,0), 2)
+    # cv2.imshow("captured frame", newFrame)
+
+    # using ROI
     bbox = cv2.selectROI('MultiTracker', frame)
     boxes.append(bbox)
-    print(bbox)
-    # (535, 208, 209, 236)
-    # frame = cv2.rectangle(frame, (535,208), (535+209,208+236), (0,0,225), 2)
-    # cv2.rectangle(frame, (boxes[0], boxes[1]), (boxes[0]+boxes[2], boxes[1]+boxes[3]),(255, 0, 0), 2, 2)
-    # cv2.imshow("frame", frame)
+    # print(boxes)
 
-    k = cv2.waitKey(0) & 0xFF
-    if (k == 113):  # q is pressed
+    # k = cv2.waitKey(0) & 0xFF
+    # if (k == 113):
+    #     break
+    if cv2.waitKey(1) & 0xFF == 27:  # Esc pressed
         break
     if boxes:
         break
 
+# cv2.imshow("captured frame", newFrame)
 multiTracker = cv2.MultiTracker_create()
 
 # Initialize MultiTracker 
@@ -79,6 +94,7 @@ while cap.isOpened():
         cv2.rectangle(frame, p1, p2, (255, 0, 0), 2, 1)
 
     # show frame
+    frame = cv2.flip(frame, 1)
     cv2.imshow('frame', frame)
     
 
