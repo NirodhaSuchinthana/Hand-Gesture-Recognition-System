@@ -38,16 +38,16 @@ i = 0
 while(i<10):
     ret, frame = cap.read()
     i = i + 1
-frame = cv2.flip(frame, 1)
-trackerType = "CSRT" 
-hand_cascade = cv2.CascadeClassifier('cascade.xml') 
+# frame = cv2.flip(frame, 1)
+trackerType = "MOSSE" 
+hand_cascade = cv2.CascadeClassifier('abcd.xml') 
 
 while (True):
     # using cascade classifire
 
     # _, newFrame = cap.read()
     # gray = cv2.cvtColor(newFrame, cv2.COLOR_BGR2GRAY)
-    # hands = hand_cascade.detectMultiScale(gray, 1.1, 4) 
+    # hands = hand_cascade.detectMultiScale(gray, 1.1, 3) 
     # for bbox in hands:
     #     a = bbox[0]
     #     b = bbox[1]
@@ -89,12 +89,15 @@ while cap.isOpened():
 
     # draw tracked objects
     for i, newbox in enumerate(bboxes):
-        p1 = (int(newbox[0]), int(newbox[1]))
-        p2 = (int(newbox[0] + newbox[2]), int(newbox[1] + newbox[3]))
+        correction_length = 0#int((newbox[2]+newbox[3])/6)
+
+        p1 = (int(newbox[0]-correction_length), int(newbox[1])-correction_length)
+        # p2 = (int(newbox[2]), int(newbox[3]))
+        p2 = (int(newbox[0]+newbox[2]), int(newbox[1]+newbox[3]))
         cv2.rectangle(frame, p1, p2, (255, 0, 0), 2, 1)
 
     # show frame
-    frame = cv2.flip(frame, 1)
+    # frame = cv2.flip(frame, 1)
     cv2.imshow('frame', frame)
     
 
