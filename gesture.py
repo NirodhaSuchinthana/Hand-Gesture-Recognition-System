@@ -3,6 +3,8 @@ import numpy as nu
 
 img_rgb = cv2.imread("twofingers.jpg", 1) # RGB color image
 img_gray = cv2.imread("twofingers.jpg", 0) # gray scal image
+# img_rgb = cv2.imread("myhand.jpeg", 1) # RGB color image
+# img_gray = cv2.imread("myhand.jpeg", 0) # gray scal image
 img_gray = cv2.resize(img_gray, (260, 400))
 img_rgb = cv2.resize(img_rgb, (260, 400))
 img = cv2.Canny(img_gray,100,200)  # apply canny pilter to detect edges of the hand
